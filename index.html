@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picking List und Lieferschein</title>
+    <style>
+        .document {
+            width: 800px;
+            padding: 20px;
+            border: 1px solid #000;
+            margin-bottom: 20px;
+        }
+        header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .section-content {
+            margin-top: 10px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .input-field {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .prepared-by {
+            margin-top: 40px;
+        }
+        @media print {
+            .buttons, .add-article-button {
+                display: none;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="picking-list" class="document">
+        <div class="header">
+            <img src="bluebar.png" alt="Logo" style="display: block; margin: 0 auto; width: 150px;">
+            <div>Picking List</div>
+        </div>
+        <div class="section">
+            <div class="section-title">Picking List Number:</div>
+            <input type="text" class="input-field" id="pickinglist-nr" oninput="generateBarcode('pickinglist')">
+        </div>
+        <div class="section">
+            <div class="section-title">Lieferungsdatum:</div>
+            <input type="date" class="input-field" id="lieferungsdatum" oninput="generateBarcode('pickinglist')">
+        </div>
+        <div class="section">
+            <svg id="pickinglist-barcode"></svg>
+        </div>
+        <div class="flex-container">
+            <div class="section">
+                <div class="section-title">Absender Information:</div>
+                <div class="section-content">Brother International GmbH<br>Konrad-Adenauer-Allee 1-11<br>61118 Bad Vilbel<br>Deutschland</div>
+            </div>
+            <div class="section">
+                <div class="section-title">Empfänger Information:</div>
+                <div class="section-content">Max Mustermann<br>Mustermannstraße 77<br>77777 Musterstadt<br>Deutschland</div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title">Artikel zu Kommissionieren:</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Artikelnummer</th>
+                        <th>Barcode</th>
+                        <th>Artikelname</th>
+                        <th>Menge</th>
+                    </tr>
+                </thead>
+                <tbody id="artikel-tabelle">
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
+                                <option value="1001">1001</option>
+                                <option value="1002">1002</option>
+                                <option value="1003">1003</option>
+                                <option value="1004">1004</option>
+                                <option value="1005">1005</option>
+                                <option value="1006">1006</option>
+                                <option value="10071007</option>
+                                <option value="1008">1008</option>
+                                <option value="1009">1009</option>
+                                <option value="1010">1010</option>
+                                <option value="1011">1011</option>
+                                <option value="1012">1012</option>
+                            </select>
+                        </td>
+                        <td><svg></svg></td>
+                        <td><input type="text" class="input-field artikelname" readonly></td>
+                        <td><input type="text" class="input-field"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="add-article-button" onclick="addRow()">Weitere Artikel hinzufügen</button>
+        </div>
+        <div class="prepared-by">
+            <div class="section-title">Vorbereitet vom:</div>
+            <input type="text" class="input-field" placeholder="Mitarbeiter">
+        </div>
+        <div class="section">
+            <div class="section-content" id="footer-picking-list"></div>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button onclick="printPickingList()">Send to Print</button>
+        <button onclick="generateLieferschein()">Generate Lieferschein</button>
+        <button onclick="savePickingListPDF()">Save Picking List to PDF</button>
+    </div>
+
+    <div id="lieferschein" class="document page-break" style="display: none;">
+        <div class="header">
+            <img src="bluebar.png" alt="Logo" style="display: block; margin: 0 auto; width: 150px;">
+            <div>Lieferschein</div>
+        </div>
+        <div class="section">
+            <div class="section-title">Lieferschein-Nr:</div>
+            <div id="lieferschein-nr-display"></div>
+        </div>
+        <div class="section">
+            <div class="section-title">Lieferungsdatum:</div>
+            <div id="lieferungsdatum-display"></div>
+        </div>
+        <div class="section">
+            <svg id="lieferschein-barcode"></svg>
+        </div>
+        <div class="flex-container">
+            <div class="section">
+                <div class="section-title">Absender Information:</div>
+                <div class="section-content">Brother International GmbH<br>Konrad-Adenauer-Allee 1-11<br>61118 Bad Vilbel<br>Deutschland</div>
+            </div>
+            <div class="section">
+                <div class="section-title">Empfänger Information:</div>
+                <div class="section-content">Max Mustermann<br>Mustermannstraße 77<br>77777 Musterstadt<br>Deutschland</div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title">Artikel:</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Artikelnummer</th>
+                        <th>Barcode</th>
+                        <th>Artikelname</th>
+                        <th>Menge</th>
+                    </tr>
+                </thead>
+                <tbody id="lieferschein-artikel-tabelle"></tbody>
+            </table>
+        </div>
+        <div class="section">
+            <div class="section-title">Versandart:</div>
+            <select class="input-field" id="geliefert-von" onchange="generateVersandartBarcode()">
+                <option value="dhl">DHL</option>
+                <option value="hermes">Hermes</option>
+                <option value="dpd">DPD</option>
+            </select>
+        </div>
+        <div class="section">
+            <div class="section-title">Anzahl der Pakete:</div>
+            <input type="text" class="input-field" id="anzahl-der-pakete" readonly>
+        </div>
+        <div class="section">
+            <div class="section-title">Gewicht (kg):</div>
+            <input type="text" class="input-field" id="brutto-kg" readonly>
+        </div>
+        <div class="section">
+            <div class="section-title">Volumen (dm3):</div>
+            <input type="text" class="input-field" id="volumen-dm3" readonly>
+        </div>
+        <div class="section">
+            <svg id="versandart-barcode" style="position: absolute; bottom: 20px;"></svg>
+        </div>
+        <div class="prepared-by">
+            <div class="section-title">Vorbereitet vom:</div>
+            <input type="text" class="input-field" placeholder="Mitarbeiter">
+        </div>
+        <div class="section">
+            <div class="section-content" id="footer-lieferschein"></div>
+        </div>
+        <div class="buttons">
+            <button onclick="printLieferschein()">Send to Print</button>
+            <button onclick="saveLieferscheinPDF()">Save Lieferschein to PDF</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
