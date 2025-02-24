@@ -105,13 +105,14 @@
                         <td>1</td>
                         <td>
                             <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
+                                <option value="">Choose the article code</option>
                                 <option value="1001">1001</option>
                                 <option value="1002">1002</option>
                                 <option value="1003">1003</option>
                                 <option value="1004">1004</option>
                                 <option value="1005">1005</option>
                                 <option value="1006">1006</option>
-                                <option value="10071007</option>
+                                <option value="1007">1007</option>
                                 <option value="1008">1008</option>
                                 <option value="1009">1009</option>
                                 <option value="1010">1010</option>
@@ -134,7 +135,7 @@
         <div class="section">
             <div class="section-content" id="footer-picking-list"></div>
         </div>
-    </div>
+   div>
 
     <div class="buttons">
         <button onclick="printPickingList()">Send to Print</button>
@@ -220,7 +221,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-</script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
