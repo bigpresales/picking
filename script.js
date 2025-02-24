@@ -176,7 +176,7 @@ function savePickingListPDF() {
     const barcodeSVG = document.getElementById('pickinglist-barcode');
     html2canvas(barcodeSVG).then(canvas => {
         const barcodeDataURL = canvas.toDataURL("image/png");
-         doc.addImage(barcodeDataURL, "PNG", 150, y - 10, 50, 10);
+        doc.addImage(barcodeDataURL, "PNG", 150, y - 10, 50, 10);
         y += 20;
 
         doc.text("Absender Information:", 10, y);
