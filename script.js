@@ -18,7 +18,7 @@ function generateBarcode(type) {
     const date = document.getElementById('lieferungsdatum').value;
     const barcodeData = `${type}_${number};${date}`;
     JsBarcode(`#${type}-barcode`, barcodeData, {
-        format: "CODE39",
+        format: "CODE128",
         lineColor: "#000",
         width: 2,
         height: 50,
@@ -47,7 +47,16 @@ function addRow() {
     const row = table.insertRow();
 
     const cell1 = row.insertCell(0);
-    const cell2 = row.insertCell</option>' +
+    const cell2 = row.insertCell(1);
+    const cell3 = row.insertCell(2);
+    const cell4 = row.insertCell(3);
+    const cell5 = row.insertCell(4);
+
+    cell1.innerHTML = rowCount;
+    cell2.innerHTML = '<select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">' +
+        '<option value="">Choose the article code</option>' +
+        '<option value="1001">1001</option>' +
+        '<option value="1002">1002</option>' +
         '<option value="1003">1003</option>' +
         '<option value="1004">1004</option>' +
         '<option value="1005">1005</option>' +
@@ -78,7 +87,7 @@ function generateLieferschein() {
 
     const barcodeData = `deliverynote_${number};${date}`;
     JsBarcode("#lieferschein-barcode", barcodeData, {
-        format: "CODE39",
+        format: "CODE128",
         lineColor: "#000",
         width: 2,
         height: 50,
@@ -137,7 +146,7 @@ function generateVersandartBarcode() {
     const volumenDm3 = document.getElementById('volumen-dm3').value;
     const barcodeData = `${geliefertVon};${date};${anzahlDerPakete};${bruttoKg};${volumenDm3}`;
     JsBarcode("#versandart-barcode", barcodeData, {
-        format: "CODE39",
+        format: "CODE128",
         lineColor: "#000",
         width: 2,
         height: 50,
@@ -277,7 +286,7 @@ function saveLieferscheinPDF() {
         const volumenDm3 = document.getElementById('volumen-dm3').value;
         const barcodeData = `${geliefertVon};${date};${anzahlDerPakete};${bruttoKg};${volumenDm3}`;
         JsBarcode("#versandart-barcode", barcodeData, {
-            format: "CODE39",
+            format: "CODE128",
             lineColor: "#000",
             width: 2,
             height: 50,
