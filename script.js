@@ -54,6 +54,7 @@ function addRow() {
 
     cell1.innerHTML = rowCount;
     cell2.innerHTML = '<select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">' +
+        '<option value="">Choose the article code</option>' +
         '<option value="1001">1001</option>' +
         '<option value="1002">1002</option>' +
         '<option value="1003">1003</option>' +
@@ -175,7 +176,7 @@ function savePickingListPDF() {
     const barcodeSVG = document.getElementById('pickinglist-barcode');
     html2canvas(barcodeSVG).then(canvas => {
         const barcodeDataURL = canvas.toDataURL("image/png");
-        doc.addImage(barcodeDataURL, "PNG", 150, y - 10, 50, 10);
+         doc.addImage(barcodeDataURL, "PNG", 150, y - 10, 50, 10);
         y += 20;
 
         doc.text("Absender Information:", 10, y);
@@ -190,7 +191,7 @@ function savePickingListPDF() {
         doc.text("Artikel zu Kommissionieren:", 10, y);
         y += 10;
         const table = document.getElementById('artikel-tabelle');
-        f        for (let i = 0; i < table.rows.length; i++) {
+        for (let i = 0; i < table.rows.length; i++) {
             if (y > 280) {
                 doc.addPage();
                 y = 20;
