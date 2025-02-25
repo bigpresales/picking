@@ -77,16 +77,16 @@ function printPickingList() {
     window.print();
 }
 
-function generateLieferschein() {
-    document.getElementById('lieferschein').style.display = 'block';
+function generateDelivery Note() {
+    document.getElementById('Delivery Note').style.display = 'block';
 
     const number = document.getElementById('pickinglist-nr').value;
     const date = document.getElementById('lieferungsdatum').value;
-    document.getElementById('lieferschein-nr-display').innerText = `deliverynote_${number}`;
+    document.getElementById('Delivery Note-nr-display').innerText = `deliverynote_${number}`;
     document.getElementById('lieferungsdatum-display').innerText = date;
 
     const barcodeData = `deliverynote_${number};${date}`;
-    JsBarcode("#lieferschein-barcode", barcodeData, {
+    JsBarcode("#Delivery Note-barcode", barcodeData, {
         format: "CODE128",
         lineColor: "#000",
         width: 2,
@@ -95,12 +95,12 @@ function generateLieferschein() {
     });
 
     const table = document.getElementById('artikel-tabelle');
-    const lieferscheinTable = document.getElementById('lieferschein-artikel-tabelle');
-    lieferscheinTable.innerHTML = '';
+    const Delivery NoteTable = document.getElementById('Delivery Note-artikel-tabelle');
+    Delivery NoteTable.innerHTML = '';
     let totalAmount = 0;
     for (let i = 0; i < table.rows.length; i++) {
         const row = table.rows[i];
-        const newRow = lieferscheinTable.insertRow();
+        const newRow = Delivery NoteTable.insertRow();
 
         const cell1 = newRow.insertCell(0);
         const cell2 = newRow.insertCell(1);
@@ -121,7 +121,7 @@ function generateLieferschein() {
 }
 
 function updateTotals() {
-    const table = document.getElementById('lieferschein-artikel-tabelle');
+    const table = document.getElementById('Delivery Note-artikel-tabelle');
     let totalAmount = 0;
     for (let i = 0; i < table.rows.length; i++) {
         const menge = parseInt(table.rows[i].cells[4].querySelector('input').value) || 0;
@@ -154,7 +154,7 @@ function generateVersandartBarcode() {
     });
 }
 
-function printLieferschein() {
+function printDelivery Note() {
     window.print();
 }
 
@@ -224,22 +224,22 @@ function savePickingListPDF() {
     });
 }
 
-function saveLieferscheinPDF() {
+function saveDelivery NotePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF('p', 'mm', 'a4');
     let y = 20;
 
-    doc.text("Lieferschein", 105, y, null, null, "center");
+    doc.text("Delivery Note", 105, y, null, null, "center");
     y += 20;
 
-    const number = document.getElementById('lieferschein-nr-display').innerText;
+    const number = document.getElementById('Delivery Note-nr-display').innerText;
     const date = document.getElementById('lieferungsdatum-display').innerText;
-    doc.text(`Lieferschein-Nr: ${number}`, 10, y);
+    doc.text(`Delivery Note-Nr: ${number}`, 10, y);
     y += 10;
     doc.text(`Lieferungsdatum: ${date}`, 10, y);
     y += 10;
 
-    const barcodeSVG = document.getElementById('lieferschein-barcode');
+    const barcodeSVG = document.getElementById('Delivery Note-barcode');
     html2canvas(barcodeSVG).then(canvas => {
         const barcodeDataURL = canvas.toDataURL("image/png");
         doc.addImage(barcodeDataURL, "PNG", 150, y - 10, 50, 10);
@@ -256,12 +256,12 @@ function saveLieferscheinPDF() {
 
         doc.text("Artikel:", 10, y);
         y += 10;
-        const table = document.getElementById('lieferschein-artikel-tabelle');
+        const table = document.getElementById('Delivery Note-artikel-tabelle');
         for (let i = 0; i < table.rows.length; i++) {
             if (y > 280) {
                 doc.addPage();
                 y = 20;
-                doc.text("Lieferschein", 105, y, null, null, "center");
+                doc.text("Delivery Note", 105, y, null, null, "center");
                 y += 20;
             }
             const row = table.rows[i];
@@ -298,13 +298,13 @@ function saveLieferscheinPDF() {
             const versandartBarcodeDataURL = canvas.toDataURL("image/png");
             doc.addImage(versandartBarcodeDataURL, "PNG", 10, 280, 50, 10);
 
-            const preparedBy = document.querySelector('#lieferschein .prepared-by input').value;
+            const preparedBy = document.querySelector('#Delivery Note .prepared-by input').value;
             doc.text(`Vorbereitet vom: ${preparedBy}`, 10, 290);
 
-            const footerText = document.getElementById('footer-lieferschein').innerText;
+            const footerText = document.getElementById('footer-Delivery Note').innerText;
             doc.text(footerText, 10, 300);
 
-            doc.save("lieferschein.pdf");
+            doc.save("Delivery Note.pdf");
         });
     });
 }
@@ -313,7 +313,7 @@ function updateFooter() {
     const date = document.getElementById('lieferungsdatum').value;
     const footerText = `Ab Lager Brother, Nippon, Mönchengladbach, den ${date}`;
     document.getElementById('footer-picking-list').innerText = footerText;
-    document.getElementById('footer-lieferschein').innerText = footerText;
+    document.getElementById('footer-Delivery Note').innerText = footerText;
 }
 
 document.getElementById('lieferungsdatum').addEventListener('change', updateFooter);
