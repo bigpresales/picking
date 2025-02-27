@@ -82,21 +82,10 @@ function addRow() {
     const cell5 = row.insertCell(4);
 
     cell1.innerHTML = rowCount;
-   HTML = `
+    `
         <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
             <option value="Artikelnummer wählen...">Artikelnummer wählen...</option>
-            <option value="1001">1001</option>
-            <option value="1002">1002</option>
-            <option value="1003">1003</option>
-            <option value="1004">1004</option>
-            <option value="1005">1005</option>
-            <option value="1006">1006</option>
-            <option value="1007">1007</option>
-            <option value="1008">1008</option>
-            <option value="1009">1009</option>
-            <option value="1010">1010</option>
-            <option value="1011">1011</option>
-            <option value="1012">1012</option>
+            ${Object.keys(articleNames).map(key => `<option value="${key}">${key}</option>`).join('')}
         </select>
     `;
     cell3.innerHTML = '<svg></svg>';
@@ -145,7 +134,7 @@ function generateLieferschein() {
         cell3.innerHTML = row.cells[2].innerHTML;
         cell4.innerText = row.cells[3].querySelector('input').value;
         const menge = parseInt(row.cells[4].querySelector('input').value) || 0;
-        cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
+                cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
         totalAmount += menge;
     }
 
