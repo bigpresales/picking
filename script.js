@@ -82,7 +82,7 @@ function addRow() {
     const cell5 = row.insertCell(4);
 
     cell1.innerHTML = rowCount;
-    `
+    cell2.innerHTML = `
         <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
             <option value="Artikelnummer wählen...">Artikelnummer wählen...</option>
             ${Object.keys(articleNames).map(key => `<option value="${key}">${key}</option>`).join('')}
@@ -134,7 +134,7 @@ function generateLieferschein() {
         cell3.innerHTML = row.cells[2].innerHTML;
         cell4.innerText = row.cells[3].querySelector('input').value;
         const menge = parseInt(row.cells[4].querySelector('input').value) || 0;
-                cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
+        cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
         totalAmount += menge;
     }
 
@@ -148,7 +148,7 @@ function generateLieferschein() {
 function updateTotals() {
     const table = document.getElementById('lieferschein-artikel-tabelle');
     let totalAmount = 0;
-    for (let i = 0; i < table.rows.length; i++) {
+        for (let i = 0; i < table.rows.length; i++) {
         const menge = parseInt(table.rows[i].cells[4].querySelector('input').value) || 0;
         totalAmount += menge;
     }
