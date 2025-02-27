@@ -92,7 +92,7 @@ function addRow() {
             <option value="1005">1005</option>
             <option value="1006">1006</option>
             <option value="1007">1007</option>
->
+            <option value="1008">1008</option>
             <option value="1009">1009</option>
             <option value="1010">1010</option>
             <option value="1011">1011</option>
@@ -208,3 +208,4 @@ function showReceiverInfo() {
         receiverDetails.innerHTML = '';
     }
 }
+pe="text" class="input-field" value="${menge}" oninput
