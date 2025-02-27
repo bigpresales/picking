@@ -92,7 +92,7 @@ function addRow() {
             <option value="1005">1005</option>
             <option value="1006">1006</option>
             <option value="1007">1007</option>
-            <option value="1008">1008</option>
+>
             <option value="1009">1009</option>
             <option value="1010">1010</option>
             <option value="1011">1011</option>
@@ -145,7 +145,7 @@ function generateLieferschein() {
         cell3.innerHTML = row.cells[2].innerHTML;
         cell4.innerText = row.cells[3].querySelector('input').value;
         const menge = parseInt(row.cells[4].querySelector('input').value) || 0;
-                cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
+        cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
         totalAmount += menge;
     }
 
