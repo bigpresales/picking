@@ -54,7 +54,7 @@ function addRow() {
 
     cell1.innerHTML = rowCount;
     cell2.innerHTML = `
-        <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
+       </option>
             <option value="1001">1001</option>
             <option value="1002">1002</option>
             <option value="1003">1003</option>
@@ -62,7 +62,7 @@ function addRow() {
             <option value="1005">1005</option>
             <option value="1006">1006</option>
             <option value="1007">1007</option>
-            value="1008">1008</option>
+            <option value="1008">1008</option>
             <option value="1009">1009</option>
             <option value="1010">1010</option>
             <option value="1011">1011</option>
@@ -80,6 +80,7 @@ function printPickingList() {
 
 function generateLieferschein() {
     document.getElementById('lieferschein').style.display = 'block';
+    document.getElementById('generate-lieferschein-button').style.display = 'none';
 
     const number = document.getElementById('pickinglist-nr').value;
     const date = document.getElementById('lieferungsdatum').value;
@@ -153,7 +154,6 @@ function generateVersandartBarcode() {
         displayValue: true
     });
 }
-
 function printLieferschein() {
     window.print();
 }
