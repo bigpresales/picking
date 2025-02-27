@@ -149,7 +149,7 @@ function generateVersandartBarcode() {
     const barcodeData = `${geliefertVon}`;
     JsBarcode("#versandart-barcode", barcodeData, {
         format: "CODE128",
-                lineColor: "#000",
+        lineColor: "#000",
         width: 2,
         height: 50,
         displayValue: true
