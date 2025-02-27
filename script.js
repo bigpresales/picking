@@ -145,7 +145,7 @@ function generateLieferschein() {
         cell3.innerHTML = row.cells[2].innerHTML;
         cell4.innerText = row.cells[3].querySelector('input').value;
         const menge = parseInt(row.cells[4].querySelector('input').value) || 0;
-        cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
+                cell5.innerHTML = `<input type="text" class="input-field" value="${menge}" oninput="updateTotals()">`;
         totalAmount += menge;
     }
 
@@ -208,4 +208,3 @@ function showReceiverInfo() {
         receiverDetails.innerHTML = '';
     }
 }
-pe="text" class="input-field" value="${menge}" oninput
