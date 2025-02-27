@@ -16,7 +16,7 @@
             font-size: 24px;
             font-weight: bold;
         }
-        .section {
+        {
             margin-top: 20px;
         }
         .section-title {
@@ -52,7 +52,7 @@
             margin-top: 40px;
         }
         @media print {
-            .buttons, .add-article-button {
+            .buttons, .add-article-button, #empfaenger-info {
                 display: none;
             }
             .page-break {
@@ -89,11 +89,36 @@
             </div>
             <div class="section">
                 <div class="section-title">Empfänger Information:</div>
-                <select class="input-field" id="empfaenger-info">
-                    <option value="1">Sebastian Schmidt<br><br>Musterstraße 1<br>64354 Reinheim<br>Deutschland</option>
-                    <option value="2">Receiver #2, Address Info #2</option>
-                    <!-- Add more options as needed -->
+                <select class="input-field" id="empfaenger-info" onchange="showReceiverInfo()">
+                    <option value="0">Select Receiver</option>
+                    <option value="1">Receiver 1</option>
+                    <option value="2">Receiver 2</option>
+                    <option value="3">Receiver 3</option>
+                    <option value="4">Receiver 4</option>
+                    <option value="5">Receiver 5</option>
+                    <option value="6">Receiver 6</option>
+                    <option value="7">Receiver 7</option>
+                    <option value="8">Receiver 8</option>
+                    <option value="9">Receiver 9</option>
+                    <option value="10">Receiver 10</option>
+                    <option value="11">Receiver 11</option>
+                    <option value="12">Receiver 12</option>
+                    <option value="13">Receiver 13</option>
+                    <option value="14">Receiver 14</option>
+                    <option value="15">Receiver 15</option>
+                    <option value="16">Receiver 16</option>
+                    <option value="17">Receiver 17</option>
+                    <option value="18">Receiver 18</option>
+                    <option value="19">Receiver 19</option>
+                    <option value="20">Receiver 20</option>
+                    <option value="21">Receiver 21</option>
+                    <option value="22">Receiver 22</option>
+                    <option value="23">Receiver 23</option>
+                    <option value="24">Receiver 24</option>
+                    <option value="25">Receiver 25</option>
+                    <option value="26">Receiver 26</option>
                 </select>
+                <div id="receiver-details" class="section-content"></div>
             </div>
         </div>
         <div class="section">
@@ -217,19 +242,60 @@
         <div class="section">
             <svg id="versandart-barcode" style="position: absolute; bottom: 20px;"></svg>
         </div>
-            <div class="section-title">Vorbereitet vom:</div>
-            <input type="text" class="input-field" placeholder="Mitarbeiter">
-        </div>
-        <div class="section">
-            <div class="section-content" id="footer-lieferschein"></div>
-        </div>
-        <div class="buttons">
-            <button onclick="printLieferschein()">Drucken</button>
-        </div>
+        <div class="section-title">Vorbereitet vom:</div>
+        <input type="text" class="input-field" placeholder="Mitarbeiter">
     </div>
+    <div class="section">
+        <div class="section-content" id="footer-lieferschein"></div>
+    </div>
+    <div class="buttons">
+        <button onclick="printLieferschein()">Drucken</button>
+    </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-    <script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+<script src="script.js"></script>
+<script>
+    const receivers = [
+        "Sebastian Schmidt<br>Musterstraße 1<br>64354 Reinheim<br>Deutschland",
+        "Fabio Müller<br>Musterstraße 2<br>64454 Gouwer<br>USA",
+        "Susanne Meyer<br>Musterstraße 3<br>64554 Riemenstalden<br>Deutschland",
+        "Marion Schulz<br>Petrusweg 7<br>64654 Fürth<br>Deutschland",
+        "Herbert Schneider<br>Petrusweg 8<br>64754 Hesseneck<br>Deutschland",
+        "Franziska Hoffmann<br>Petrusweg 9<br>64854 Eppertshausen<br>Deutschland",
+        "Julia Becker<br>Petrusweg 10<br>64954 Tel Aviv-Jaffa<br>Israel",
+        "Jeanette Fischer<br>Ringelstraße 54<br>65054 São Luís<br>Brasilien",
+        "Jennifer Weber<br>Ringelstraße 55<br>65154 Võru<br>Estland",
+        "Markus Wagner<br>Ringelstraße 56<br>65254 Vastseliina<br>Estland",
+        "Emil Bauer<br>Ringelstraße 57<br>65354 Syracuse<br>USA",
+        "Paul Lange<br>Ringelstraße 58<br>65454 Kelsterbach<br>Deutschland",
+        "Jakob Wolf<br>Ringelstraße 59<br>65554 Limburg an der Lahn<br>Deutschland",
+        "Lea Schäfer<br>Kannweg 3<br>65654 Nuevo León<br>Mexico",
+        "Leo Koch<br>Kannweg 4<br>65754 Spokane<br>USA",
+        "Samuel Richter<br>Kannweg 5<br>659540 Rebrikha<br>Russland",
+        "David Klein<br>Kannweg 6<br>659540 Singapur<br>Singapur",
+        "Linus Schröder<br>Kannweg 7<br>66054 Vasto<br>Italien",
+        "Milan Neumann<br>Karpfangerstraße 13<br>66154 Blitar<br>Indonesien",
+        "Finn Schwarz<br>Karpfangerstraße 14<br>66254 Rõuge<br>Estland",
+        "Tim Zimmermann<br>Karpfangerstraße 15<br>66354 Colonia Infonavit la Huasteca<br>Mexico",
+        "Jasper Braun<br>Karpfangerstraße 16<br>664540 Khomutovo<br>Russland",
+        "Mika Krüger<br>Karpfangerstraße 17<br>66554 Randolph<br>USA",
+        "Tobias Hartmann<br>Karpfangerstraße 18<br>66654 Oblast Kardschali<br>Bulgarien",
+        "Luca Schmitt<br>Karpfangerstraße 19<br>66754 Mapleton<br>USA",
+         "Lio Werner<br>Karpfangerstraße 20<br>66854 Perpignan<br>Frankreich"
+    ];
+
+    function showReceiverInfo() {
+        const select = document.getElementById('empfaenger-info');
+        const receiverDetails = document.getElementById('receiver-details');
+        const selectedIndex = select.value;
+        if (selectedIndex > 0) {
+            receiverDetails.innerHTML = receivers[selectedIndex - 1];
+        } else {
+            receiverDetails.innerHTML = '';
+        }
+    }
+</script>
 </body>
 </html>
