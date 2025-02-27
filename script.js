@@ -59,7 +59,6 @@ function addRow() {
     cell5.innerHTML = '<input type="text" class="input-field">';
 }
 
-() {
     window.print();
 }
 
