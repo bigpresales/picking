@@ -54,7 +54,8 @@ function addRow() {
 
     cell1.innerHTML = rowCount;
     cell2.innerHTML = `
-       </option>
+        <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
+            <option value="Artikelnummer wählen...">Artikelnummer wählen...</option>
             <option value="1001">1001</option>
             <option value="1002">1002</option>
             <option value="1003">1003</option>
@@ -148,12 +149,13 @@ function generateVersandartBarcode() {
     const barcodeData = `${geliefertVon}`;
     JsBarcode("#versandart-barcode", barcodeData, {
         format: "CODE128",
-        lineColor: "#000",
+                lineColor: "#000",
         width: 2,
         height: 50,
         displayValue: true
     });
 }
+
 function printLieferschein() {
     window.print();
 }
