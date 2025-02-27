@@ -8,9 +8,9 @@
         .document {
             width: 100%;
             height: 100%;
-            padding: 20px;
+            padding: 10px;
             border: 1px solid #000;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             box-sizing: border-box;
         }
         header {
@@ -19,23 +19,23 @@
             font-weight: bold;
         }
         .section {
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .section-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
         }
         .section-content {
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+           ;
+            margin-top: 10px;
         }
         .table th, .table td {
             border: 1px solid #000;
-            padding: 8px;
+            padding: 5px;
             text-align: left;
         }
         .input-field {
@@ -48,10 +48,10 @@
             justify-content: space-between;
         }
         .buttons {
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .prepared-by {
-            margin-top: 40px;
+            margin-top: 20px;
         }
         @media print {
             @page {
@@ -181,12 +181,12 @@
 
     <div class="buttons">
         <button onclick="printPickingList()">Drucken</button>
-        <button onclick="generateLieferschein()">Lieferschein generieren</button>
+        <button id="generate-lieferschein-button" onclick="generateLieferschein()">Lieferschein generieren</button>
     </div>
 
     <div id="lieferschein" class="document page-break" style="display: none;">
         <div class="header">
-            <img src="bluebar.png" alt="Logo" style="display: block; margin: 0 auto; width: 150px;">
+            <img src="Bluebar.png" alt="Logo" style="display: block; margin: 0 auto; width: 150px;">
             <div>Lieferschein</div>
         </div>
         <div class="section">
@@ -222,8 +222,7 @@
                         <th>Menge</th>
                     </tr>
                 </thead>
-                <tbody id="lieferschein-artikel-tabelle"></
-                                    </tbody>
+                                <tbody id="lieferschein-artikel-tabelle"></tbody>
             </table>
         </div>
         <div class="section">
@@ -306,6 +305,11 @@
         } else {
             receiverDetails.innerHTML = '';
         }
+    }
+
+    function generateLieferschein() {
+        document.getElementById('lieferschein').style.display = 'block';
+        document.getElementById('generate-lieferschein-button').style.display = 'none';
     }
 </script>
 </body>
