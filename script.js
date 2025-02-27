@@ -26,9 +26,9 @@ function generateBarcode(type) {
     });
 }
 
-function generateArticleBarcode(input) {
-    const barcodeData = input.value;
-    const svg = input.parentElement.nextElementSibling.querySelector('svg');
+function generateArticleBarcode(select) {
+    const barcodeData = select.value;
+    const svg = select.parentElement.nextElementSibling.querySelector('svg');
     JsBarcode(svg, barcodeData, {
         format: "CODE128",
         lineColor: "#000",
@@ -37,7 +37,7 @@ function generateArticleBarcode(input) {
         displayValue: true
     });
 
-    const artikelnameInput = input.parentElement.nextElementSibling.nextElementSibling.querySelector('input');
+    const artikelnameInput = select.parentElement.nextElementSibling.nextElementSibling.querySelector('input');
     artikelnameInput.value = articleNames[barcodeData] || "";
 }
 
@@ -53,12 +53,28 @@ function addRow() {
     const cell5 = row.insertCell(4);
 
     cell1.innerHTML = rowCount;
-    cell2.innerHTML = '<input type="text" class="input-field artikelnummer" oninput="generateArticleBarcode(this)">';
+    cell2.innerHTML = `
+        <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
+            <option value="1001">1001 - TD4550DNWBFC</option>
+            <option value="1002">1002 - TJ4121TN</option>
+            <option value="1003">1003 - PT-E560BT</option>
+            <option value="1004">1004 - RJ3250WB</option>
+            <option value="1005">1005 - RJ3035B</option>
+            <option value="1006">1006 - TJ-4121TN</option>
+            <option value="1007">1007 - QL1110NWBc</option>
+            <option value="1008">1008 - RJ-2035B</option>
+            <option value="1009">1009 - RJ-2055WB</option>
+            <option value="1010">1010 - RJ-3230BL</option>
+            <option value="1011">1011 - TD-4750TNWBR</option>
+            <option value="1012">1012 - TD-2350DNFC</option>
+        </select>
+    `;
     cell3.innerHTML = '<svg></svg>';
     cell4.innerHTML = '<input type="text" class="input-field artikelname" readonly>';
     cell5.innerHTML = '<input type="text" class="input-field">';
 }
 
+function printPickingList() {
     window.print();
 }
 
@@ -94,7 +110,7 @@ function generateLieferschein() {
         const cell5 = newRow.insertCell(4);
 
         cell1.innerText = row.cells[0].innerText;
-        cell2.innerText = row.cells[1].querySelector('input').value;
+        cell2.innerText = row.cells[1].querySelector('select').value;
         cell3.innerHTML = row.cells[2].innerHTML;
         cell4.innerText = row.cells[3].querySelector('input').value;
         const menge = parseInt(row.cells[4].querySelector('input').value) || 0;
