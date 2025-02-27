@@ -53,21 +53,7 @@ function addRow() {
     const cell5 = row.insertCell(4);
 
     cell1.innerHTML = rowCount;
-    cell2.innerHTML = '<select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">' +
-        '<option value="">Choose the article code</option>' +
-        '<option value="1001">1001</option>' +
-        '<option value="1002">1002</option>' +
-        '<option value="1003">1003</option>' +
-        '<option value="1004">1004</option>' +
-        '<option value="1005">1005</option>' +
-        '<option value="1006">1006</option>' +
-        '<option value="1007">1007</option>' +
-        '<option value="1008">1008</option>' +
-        '<option value="1009">1009</option>' +
-        '<option value="1010">1010</option>' +
-        '<option value="1011">1011</option>' +
-        '<option value="1012">1012</option>' +
-        '</select>';
+    cell2.innerHTML = '<input type="text" class="input-field artikelnummer" oninput="generateArticleBarcode(this)">';
     cell3.innerHTML = '<svg></svg>';
     cell4.innerHTML = '<input type="text" class="input-field artikelname" readonly>';
     cell5.innerHTML = '<input type="text" class="input-field">';
@@ -77,15 +63,15 @@ function printPickingList() {
     window.print();
 }
 
-function generatelieferschein() {
+function generateLieferschein() {
     document.getElementById('lieferschein').style.display = 'block';
 
     const number = document.getElementById('pickinglist-nr').value;
     const date = document.getElementById('lieferungsdatum').value;
-    document.getElementById('lieferschein-nr-display').innerText = `deliverynote_${number}`;
+    document.getElementById('lieferschein-nr-display').innerText = `lieferscheinnr_${number}`;
     document.getElementById('lieferungsdatum-display').innerText = date;
 
-    const barcodeData = `deliverynote_${number};${date}`;
+    const barcodeData = `lieferscheinnr_${number};${date}`;
     JsBarcode("#lieferschein-barcode", barcodeData, {
         format: "CODE128",
         lineColor: "#000",
@@ -109,7 +95,7 @@ function generatelieferschein() {
         const cell5 = newRow.insertCell(4);
 
         cell1.innerText = row.cells[0].innerText;
-        cell2.innerText = row.cells[1].querySelector('select').value;
+        cell2.innerText = row.cells[1].querySelector('input').value;
         cell3.innerHTML = row.cells[2].innerHTML;
         cell4.innerText = row.cells[3].querySelector('input').value;
         const menge = parseInt(row.cells[4].querySelector('input').value) || 0;
@@ -140,11 +126,7 @@ function updateTotals() {
 
 function generateVersandartBarcode() {
     const geliefertVon = document.getElementById('geliefert-von').value;
-    const date = document.getElementById('lieferungsdatum').value;
-    const anzahlDerPakete = document.getElementById('anzahl-der-pakete').value;
-    const bruttoKg = document.getElementById('brutto-kg').value;
-    const volumenDm3 = document.getElementById('volumen-dm3').value;
-    const barcodeData = `${geliefertVon};${date};${anzahlDerPakete};${bruttoKg};${volumenDm3}`;
+    const barcodeData = `${geliefertVon}`;
     JsBarcode("#versandart-barcode", barcodeData, {
         format: "CODE128",
         lineColor: "#000",
@@ -154,159 +136,8 @@ function generateVersandartBarcode() {
     });
 }
 
-function printlieferschein() {
+function printLieferschein() {
     window.print();
-}
-
-function savePickingListPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
-    let y = 20;
-
-    doc.text("Picking List", 105, y, null, null, "center");
-    y += 20;
-
-    const number = document.getElementById('pickinglist-nr').value;
-    const date = document.getElementById('lieferungsdatum').value;
-    doc.text(`Picking List Number: pickinglist_${number}`, 10, y);
-    y += 10;
-    doc.text(`Lieferungsdatum: ${date}`, 10, y);
-    y += 10;
-
-    const barcodeSVG = document.getElementById('pickinglist-barcode');
-    html2canvas(barcodeSVG).then(canvas => {
-        const barcodeDataURL = canvas.toDataURL("image/png");
-        doc.addImage(barcodeDataURL, "PNG", 150, y - 10, 50, 10);
-        y += 20;
-
-        doc.text("Absender Information:", 10, y);
-        y += 10;
-        doc.text("Brother International GmbH\nKonrad-Adenauer-Allee 1-11\n61118 Bad Vilbel\nDeutschland", 10, y);
-        y += 20;
-
-        doc.text("Empfänger Information:", 150, y - 20);
-        doc.text("Max Mustermann\nMustermannstraße 77\n77777 Musterstadt\nDeutschland", 150, y - 10);
-        y += 20;
-
-        doc.text("Artikel zu Kommissionieren:", 10, y);
-        y += 10;
-        const table = document.getElementById('artikel-tabelle');
-        for (let i = 0; i < table.rows.length; i++) {
-            if (y > 280) {
-                doc.addPage();
-                y = 20;
-                doc.text("Picking List", 105, y, null, null, "center");
-                y += 20;
-            }
-            const row = table.rows[i];
-            const position = row.cells[0].innerText;
-            const artikelnummer = row.cells[1].querySelector('select').value;
-            const artikelname = row.cells[3].querySelector('input').value;
-            const menge = row.cells[4].querySelector('input').value;
-            doc.text(`Position: ${position}, Artikelnummer: ${artikelnummer}, Artikelname: ${artikelname}, Menge: ${menge}`, 10, y);
-            y += 10;
-
-            const articleBarcodeSVG = row.cells[2].querySelector('svg');
-            html2canvas(articleBarcodeSVG).then(canvas => {
-                const articleBarcodeDataURL = canvas.toDataURL("image/png");
-                doc.addImage(articleBarcodeDataURL, "PNG", 150, y - 10, 50, 10);
-            });
-            y += 10;
-        }
-
-        const preparedBy = document.querySelector('#picking-list .prepared-by input').value;
-        doc.text(`Vorbereitet vom: ${preparedBy}`, 10, y + 20);
-
-        const footerText = document.getElementById('footer-picking-list').innerText;
-        doc.text(footerText, 10, y + 30);
-
-        doc.save("picking_list.pdf");
-    });
-}
-
-function savelieferscheinPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
-    let y = 20;
-
-    doc.text("lieferschein", 105, y, null, null, "center");
-    y += 20;
-
-    const number = document.getElementById('lieferschein-nr-display').innerText;
-    const date = document.getElementById('lieferungsdatum-display').innerText;
-    doc.text(`lieferschein-Nr: ${number}`, 10, y);
-    y += 10;
-    doc.text(`Lieferungsdatum: ${date}`, 10, y);
-    y += 10;
-
-    const barcodeSVG = document.getElementById('lieferschein-barcode');
-    html2canvas(barcodeSVG).then(canvas => {
-        const barcodeDataURL = canvas.toDataURL("image/png");
-        doc.addImage(barcodeDataURL, "PNG", 150, y - 10, 50, 10);
-        y += 20;
-
-        doc.text("Absender Information:", 10, y);
-        y += 10;
-        doc.text("Brother International GmbH\nKonrad-Adenauer-Allee 1-11\n61118 Bad Vilbel\nDeutschland", 10, y);
-        y += 20;
-
-        doc.text("Empfänger Information:", 150, y - 20);
-        doc.text("Max Mustermann\nMustermannstraße 77\n77777 Musterstadt\nDeutschland", 150, y - 10);
-        y += 20;
-
-        doc.text("Artikel:", 10, y);
-        y += 10;
-        const table = document.getElementById('lieferschein-artikel-tabelle');
-        for (let i = 0; i < table.rows.length; i++) {
-            if (y > 280) {
-                doc.addPage();
-                y = 20;
-                doc.text("lieferschein", 105, y, null, null, "center");
-                y += 20;
-            }
-            const row = table.rows[i];
-            const position = row.cells[0].innerText;
-            const artikelnummer = row.cells[1].innerText;
-            const artikelname = row.cells[3].innerText;
-            const menge = row.cells[4].querySelector('input').value;
-            doc.text(`Position: ${position}, Artikelnummer: ${artikelnummer}, Artikelname: ${artikelname}, Menge: ${menge}`, 10, y);
-            y += 10;
-
-            const articleBarcodeSVG = row.cells[2].querySelector('svg');
-            html2canvas(articleBarcodeSVG).then(canvas => {
-                const articleBarcodeDataURL = canvas.toDataURL("image/png");
-                doc.addImage(articleBarcodeDataURL, "PNG", 150, y - 10, 50, 10);
-            });
-            y += 10;
-        }
-
-        const geliefertVon = document.getElementById('geliefert-von').value;
-        const anzahlDerPakete = document.getElementById('anzahl-der-pakete').value;
-        const bruttoKg = document.getElementById('brutto-kg').value;
-        const volumenDm3 = document.getElementById('volumen-dm3').value;
-        const barcodeData = `${geliefertVon};${date};${anzahlDerPakete};${bruttoKg};${volumenDm3}`;
-        JsBarcode("#versandart-barcode", barcodeData, {
-            format: "CODE128",
-            lineColor: "#000",
-            width: 2,
-            height: 50,
-            displayValue: true
-        });
-
-        const versandartBarcodeSVG = document.getElementById('versandart-barcode');
-        html2canvas(versandartBarcodeSVG).then(canvas => {
-            const versandartBarcodeDataURL = canvas.toDataURL("image/png");
-            doc.addImage(versandartBarcodeDataURL, "PNG", 10, 280, 50, 10);
-
-            const preparedBy = document.querySelector('#lieferschein .prepared-by input').value;
-            doc.text(`Vorbereitet vom: ${preparedBy}`, 10, 290);
-
-            const footerText = document.getElementById('footer-lieferschein').innerText;
-            doc.text(footerText, 10, 300);
-
-            doc.save("lieferschein.pdf");
-        });
-    });
 }
 
 function updateFooter() {
