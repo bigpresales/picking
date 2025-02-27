@@ -59,7 +59,6 @@ function addRow() {
     cell5.innerHTML = '<input type="text" class="input-field">';
 }
 
-function printPickingList() {
     window.print();
 }
 
@@ -104,6 +103,9 @@ function generateLieferschein() {
     }
 
     updateTotals();
+
+    const empfaengerInfo = document.getElementById('empfaenger-info').selectedOptions[0].text;
+    document.getElementById('empfaenger-info-display').innerText = empfaengerInfo;
 }
 
 function updateTotals() {
