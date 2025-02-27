@@ -106,7 +106,8 @@
             <div class="section-title">Vorbereitet vom:</div>
             <input type="text" class="input-field" placeholder="Mitarbeiter">
         </div>
-        <div class="section">Ab Lager Brother International GmbH</div>
+        <div class="section">
+            <div class="section-content" id="footer-picking-list">Ab Lager Brother International GmbH</div>
         </div>
     </div>
 
@@ -181,24 +182,23 @@
             <input type="text" class="input-field" id="volumen-dm3" readonly>
         </div>
         <div class="section">
-                        <svg id="versandart-barcode" style="position: absolute; bottom: 20px;"></svg>
+        <div class="section">
+            <svg id="versandart-barcode" style="position: absolute; bottom: 20px;"></svg>
         </div>
-
-         <div class="prepared-by">
+        <div class="prepared-by">
             <div class="section-title">Vorbereitet vom:</div>
             <input type="text" class="input-field" placeholder="Mitarbeiter">
         </div>
         <div class="section">
-            <div class="section-content" id="footer-lieferschein"></div>
+            <div class="section-content" id="footer-lieferschein">Ab Lager Brother International GmbH</div>
         </div>
         <div class="buttons">
             <button onclick="printLieferschein()">Drucken</button>
-                    <div class="section">Ab Lager Brother International GmbH</div>
+        </div>
     </div>
 
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-<script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
