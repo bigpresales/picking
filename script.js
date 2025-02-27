@@ -13,6 +13,35 @@ const articleNames = {
     1012: "TD-2350DNFC"
 };
 
+const receivers = [
+    "Sebastian Schmidt<br>Musterstraße 1<br>64354 Reinheim<br>Deutschland",
+    "Fabio Müller<br>Musterstraße 2<br>64454 Gouwer<br>USA",
+    "Susanne Meyer<br>Musterstraße 3<br>64554 Riemenstalden<br>Deutschland",
+    "Marion Schulz<br>Petrusweg 7<br>64654 Fürth<br>Deutschland",
+    "Herbert Schneider<br>Petrusweg 8<br>64754 Hesseneck<br>Deutschland",
+    "Franziska Hoffmann<br>Petrusweg 9<br>64854 Eppertshausen<br>Deutschland",
+    "Julia Becker<br>Petrusweg 10<br>64954 Tel Aviv-Jaffa<br>Israel",
+    "Jeanette Fischer<br>Ringelstraße 54<br>65054 São Luís<br>Brasilien",
+    "Jennifer Weber<br>Ringelstraße 55<br>65154 Võru<br>Estland",
+    "Markus Wagner<br>Ringelstraße 56<br>65254 Vastseliina<br>Estland",
+    "Emil Bauer<br>Ringelstraße 57<br>65354 Syracuse<br>USA",
+    "Paul Lange<br>Ringelstraße 58<br>65454 Kelsterbach<br>Deutschland",
+    "Jakob Wolf<br>Ringelstraße 59<br>65554 Limburg an der Lahn<br>Deutschland",
+    "Lea Schäfer<br>Kannweg 3<br>65654 Nuevo León<br>Mexico",
+    "Leo Koch<br>Kannweg 4<br>65754 Spokane<br>USA",
+    "Samuel Richter<br>Kannweg 5<br>659540 Rebrikha<br>Russland",
+    "David Klein<br>Kannweg 6<br>659540 Singapur<br>Singapur",
+    "Linus Schröder<br>Kannweg 7<br>66054 Vasto<br>Italien",
+    "Milan Neumann<br>Karpfangerstraße 13<br>66154 Blitar<br>Indonesien",
+    "Finn Schwarz<br>Karpfangerstraße 14<br>66254 Rõuge<br>Estland",
+    "Tim Zimmermann<br>Karpfangerstraße 15<br>66354 Colonia Infonavit la Huasteca<br>Mexico",
+    "Jasper Braun<br>Karpfangerstraße 16<br>664540 Khomutovo<br>Russland",
+    "Mika Krüger<br>Karpfangerstraße 17<br>66554 Randolph<br>USA",
+    "Tobias Hartmann<br>Karpfangerstraße 18<br>66654 Oblast Kardschali<br>Bulgarien",
+    "Luca Schmitt<br>Karpfangerstraße 19<br>66754 Mapleton<br>USA",
+    "Lio Werner<br>Karpfangerstraße 20<br>66854 Perpignan<br>Frankreich"
+];
+
 function generateBarcode(type) {
     const number = document.getElementById(`${type}-nr`).value;
     const date = document.getElementById('lieferungsdatum').value;
@@ -168,3 +197,14 @@ function updateFooter() {
 }
 
 document.getElementById('lieferungsdatum').addEventListener('change', updateFooter);
+
+function showReceiverInfo() {
+    const select = document.getElementById('empfaenger-info');
+    const receiverDetails = document.getElementById('receiver-details');
+    const selectedIndex = select.value;
+    if (selectedIndex > 0) {
+        receiverDetails.innerHTML = receivers[selectedIndex - 1];
+    } else {
+        receiverDetails.innerHTML = '';
+    }
+}
