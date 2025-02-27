@@ -82,7 +82,7 @@ function addRow() {
     const cell5 = row.insertCell(4);
 
     cell1.innerHTML = rowCount;
-    cell2.innerHTML = `
+   HTML = `
         <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
             <option value="Artikelnummer wählen...">Artikelnummer wählen...</option>
             <option value="1001">1001</option>
@@ -152,7 +152,8 @@ function generateLieferschein() {
     updateTotals();
 
     const empfaengerInfo = document.getElementById('empfaenger-info').selectedOptions[0].text;
-    document.getElementById('empfaenger-info-display').innerText = empfaengerInfo;
+    const empfaengerDetails = receivers[document.getElementById('empfaenger-info').selectedIndex - 1];
+    document.getElementById('empfaenger-info-display').innerHTML = empfaengerDetails;
 }
 
 function updateTotals() {
