@@ -1,9 +1,9 @@
 .document {
-    width: calc(100% - 2cm); /* Adjust width to fit the page with margins */
-    height: calc(100% - 2cm); /* Adjust height to fit the page with margins */
+    width: 100%;
+    height: 100%;
     padding: 10px;
     border: 1px solid #000;
-    margin: 1cm auto; /* Center the document with margins */
+    margin-bottom: 10px;
     box-sizing: border-box;
 }
 header {
@@ -60,9 +60,9 @@ header {
     }
     .document {
         page-break-after: always;
-        width: calc(100% - 2cm); /* Adjust width to fit the page with margins */
-        height: calc(100% - 2cm); /* Adjust height to fit the page with margins */
-        transform: scale(0.75);
+        width: 100%;
+        height: 100%;
+        transform: none;
         transform-origin: top left;
     }
 }
