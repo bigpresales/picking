@@ -29,7 +29,7 @@
         .table {
             width: 100%;
             border-collapse: collapse;
-           px;
+            margin-top: 20px;
         }
         .table th, .table td {
             border: 1px solid #000;
@@ -111,7 +111,22 @@
                 <tbody id="artikel-tabelle">
                     <tr>
                         <td>1</td>
-                        <td><input type="text" class="input-field artikelnummer" oninput="generateArticleBarcode(this)"></td>
+                        <td>
+                            <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
+                                <option value="1001">1001 - TD4550DNWBFC</option>
+                                <option value="1002">1002 - TJ4121TN</option>
+                                <option value="1003">1003 - PT-E560BT</option>
+                                <option value="1004">1004 - RJ3250WB</option>
+                                <option value="1005">1005 - RJ3035B</option>
+                                <option value="1006">1006 - TJ-4121TN</option>
+                                <option value="1007">1007 - QL1110NWBc</option>
+                                <option value="1008">1008 - RJ-2035B</option>
+                                <option value="1009">1009 - RJ-2055WB</option>
+                                <option value="1010">1010 - RJ-3230BL</option>
+                                <option value="1011">1011 - TD-4750TNWBR</option>
+                                <option value="1012">1012 - TD-2350DNFC</option>
+                            </select>
+                        </td>
                         <td><svg></svg></td>
                         <td><input type="text" class="input-field artikelname" readonly></td>
                         <td><input type="text" class="input-field"></td>
