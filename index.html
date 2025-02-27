@@ -113,18 +113,18 @@
                         <td>1</td>
                         <td>
                             <select class="input-field artikelnummer" onchange="generateArticleBarcode(this)">
-                                <option value="1001">1001 - TD4550DNWBFC</option>
-                                <option value="1002">1002 - TJ4121TN</option>
-                                <option value="1003">1003 - PT-E560BT</option>
-                                <option value="1004">1004 - RJ3250WB</option>
-                                <option value="1005">1005 - RJ3035B</option>
-                                <option value="1006">1006 - TJ-4121TN</option>
-                                <option value="1007">1007 - QL1110NWBc</option>
-                                <option value="1008">1008 - RJ-2035B</option>
-                                <option value="1009">1009 - RJ-2055WB</option>
-                                <option value="1010">1010 - RJ-3230BL</option>
-                                <option value="1011">1011 - TD-4750TNWBR</option>
-                                <option value="1012">1012 - TD-2350DNFC</option>
+                                <option value="1001">1001</option>
+                                <option value="1002">1002</option>
+                                <option value="1003">1003</option>
+                                <option value="1004">1004</option>
+                                <option value="1005">1005</option>
+                                <option value="1006">1006</option>
+                                <option value="1007">1007</option>
+                                <option value="1008">1008</option>
+                                <option value="1009">1009</option>
+                                <option value="1010">1010</option>
+                                <option value="1011">1011</option>
+                                <option value="1012">1012</option>
                             </select>
                         </td>
                         <td><svg></svg></td>
@@ -215,6 +215,13 @@
             <input type="text" class="input-field" id="volumen-dm3" readonly>
         </div>
         <div class="section">
+            <svg id="versandart-barcode" style="position: absolute; bottom: 20px;"></svg>
+        </div>
+        <div class="prepared-by">
+            <div class="section-title">Vorbereitet vom:</div>
+            <input type="text" class="input-field" placeholder="Mitarbeiter">
+        </div>
+                <div class="section">
             <svg id="versandart-barcode" style="position: absolute; bottom: 20px;"></svg>
         </div>
         <div class="prepared-by">
