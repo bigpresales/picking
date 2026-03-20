@@ -1,16 +1,9 @@
 const articleNames = {
-    1001: "TD4550DNWBFC",
-    1002: "TJ4121TN",
-    1003: "PT-E560BT",
-    1004: "RJ3250WB",
-    1005: "RJ3035B",
-    1006: "TJ-4121TN",
-    1007: "QL1110NWBc",
-    1008: "RJ-2035B",
-    1009: "RJ-2055WB",
-    1010: "RJ-3230BL",
-    1011: "TD-4750TNWBR",
-    1012: "TD-2350DNFC"
+    1001: "Brother Surprise Truck",
+    1002: "Sparkling Water",
+    1003: "Flaschenöffner",
+    1004: "Brother Lanyard",
+    1005: "Fruchtgummi Vegan",
 };
 
 const receivers = [
